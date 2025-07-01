@@ -274,10 +274,14 @@ logging.level.com.invoice.invoice=DEBUG
 - **Validation**: Add more comprehensive XML validation rules
 - **Documentation**: Consider adding OpenAPI/Swagger documentation
 
+## Swagger
+
+- http://localhost:8080/swagger-ui/index.html
+
 ## Sample Request with curl
 
 ```bash
-curl -X POST http://localhost:8080/api/invoices \
+curl -X POST  http://localhost:8080/api/invoices/xml\
   -H "Content-Type: application/json" \
   -d '{
     "base64xml": "PEZha3R1cmEgeG1sbnM9Imh0dHA6Ly9jcmQuZ292LnBsL3d6b3IvMjAyMy8wNi8yOS8xMjY0OC8iPjxQb2RtaW90MT48RGFuZUlkZW50eWZpa2FjeWpuZT48TklQPjk3ODEzOTkyNTk8L05JUD48L0RhbmVJZGVudHlmaWthY3lqbmU+PC9Qb2RtaW90MT48RmE+PFBfMT4yMDIzLTA4LTMxPC9QXzE+PFBfMj5GSzIwMjMvMDgvMzE8L1BfMj48L0ZhPjwvRmFrdHVyYT4="
@@ -286,8 +290,5 @@ curl -X POST http://localhost:8080/api/invoices \
 
 ## Support
 
-For issues or questions regarding this application:
-
-1. Check the logs for detailed error messages
-2. Verify your XML structure matches the expected format
-3. Ensure all dependencies are properly installed
+- sedatbali44@gmail.com
+- https://github.com/sedatbali44
