@@ -35,8 +35,7 @@ This Spring Boot application provides a REST API for processing XML invoices. Th
 ### 1. Clone the Repository
 
 ```bash
-git clone <repository-url>
-cd invoice-processing-api
+https://github.com/sedatbali44/invoice.git
 ```
 
 ### 2. Database Setup
@@ -281,7 +280,7 @@ logging.level.com.invoice.invoice=DEBUG
 ## Sample Request with curl
 
 ```bash
-curl -X POST  http://localhost:8080/api/invoices/xml\
+curl -X POST  http://localhost:8080/api/invoices\
   -H "Content-Type: application/json" \
   -d '{
     "base64xml": "PEZha3R1cmEgeG1sbnM9Imh0dHA6Ly9jcmQuZ292LnBsL3d6b3IvMjAyMy8wNi8yOS8xMjY0OC8iPjxQb2RtaW90MT48RGFuZUlkZW50eWZpa2FjeWpuZT48TklQPjk3ODEzOTkyNTk8L05JUD48L0RhbmVJZGVudHlmaWthY3lqbmU+PC9Qb2RtaW90MT48RmE+PFBfMT4yMDIzLTA4LTMxPC9QXzE+PFBfMj5GSzIwMjMvMDgvMzE8L1BfMj48L0ZhPjwvRmFrdHVyYT4="

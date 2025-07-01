@@ -17,7 +17,7 @@ public class InvoiceControllerImpl implements InvoiceController {
     private final InvoiceService invoiceService;
 
     @Override
-    @PostMapping(value = "/invoices/xml", consumes = "application/xml", produces = "application/json")
+    @PostMapping(value = "/invoices", consumes = "application/xml", produces = "application/json")
     public ResponseEntity<InvoiceDto.InvoiceResponse> processXmlInvoice(@RequestBody String xmlContent) {
        return ResponseEntity.ok(invoiceService.processXmlInvoice(xmlContent));
     }
