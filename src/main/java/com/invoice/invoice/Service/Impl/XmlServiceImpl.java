@@ -7,7 +7,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -93,7 +92,6 @@ public class XmlServiceImpl implements XmlService {
                 return nipNode.getTextContent();
             }
 
-            // Fallback for documents without namespace prefix
             NodeList nodes = document.getElementsByTagNameNS(NAMESPACE_URI, "NIP");
             if (nodes.getLength() > 0) {
                 return nodes.item(0).getTextContent();
