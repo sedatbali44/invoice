@@ -1,6 +1,9 @@
 package com.invoice.invoice.Service.Impl;
 
 
+import com.invoice.invoice.Exception.Base64DecodingException;
+import com.invoice.invoice.Exception.XmlParsingException;
+import com.invoice.invoice.Exception.XmlValidationException;
 import com.invoice.invoice.Service.XmlService;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
@@ -36,10 +39,9 @@ public class XmlServiceImpl implements XmlService {
             byte[] decodedBytes = Base64.getDecoder().decode(base64Xml);
             return new String(decodedBytes);
         } catch (IllegalArgumentException e) {
-            throw new RuntimeException("Invalid Base64 encoding", e);
+            throw new Base64DecodingException("Invalid Base64 encoding provided", e);
         }
     }
-
 
     @Override
     public Document parseXml(String xmlContent) {
@@ -49,7 +51,7 @@ public class XmlServiceImpl implements XmlService {
             DocumentBuilder builder = factory.newDocumentBuilder();
             return builder.parse(new ByteArrayInputStream(xmlContent.getBytes()));
         } catch (ParserConfigurationException | SAXException | IOException e) {
-            throw new RuntimeException("Failed to parse XML", e);
+            throw new XmlParsingException("Failed to parse XML content", e);
         }
     }
 
@@ -62,7 +64,7 @@ public class XmlServiceImpl implements XmlService {
             Source source = new DOMSource(document);
             validator.validate(source);
         } catch (SAXException | IOException e) {
-            throw new RuntimeException("XML validation failed: " + e.getMessage(), e);
+            throw new XmlValidationException("XML validation against schema failed", e);
         }
     }
 
@@ -97,9 +99,9 @@ public class XmlServiceImpl implements XmlService {
                 return nodes.item(0).getTextContent();
             }
 
-            throw new RuntimeException("NIP not found in XML");
+            throw new XmlParsingException("NIP element not found in the provided XML");
         } catch (Exception e) {
-            throw new RuntimeException("Failed to extract NIP: " + e.getMessage(), e);
+            throw new XmlParsingException("Failed to extract NIP from XML", e);
         }
     }
 
@@ -110,9 +112,12 @@ public class XmlServiceImpl implements XmlService {
             if (nodes.getLength() > 0) {
                 return nodes.item(0).getTextContent();
             }
-            throw new RuntimeException("P_1 not found in XML");
+            throw new XmlParsingException("P_1 element not found in the provided XML");
         } catch (Exception e) {
-            throw new RuntimeException("Failed to extract P_1: " + e.getMessage(), e);
+            if (e instanceof XmlParsingException) {
+                throw e;
+            }
+            throw new XmlParsingException("Failed to extract P_1 from XML", e);
         }
     }
 
@@ -123,9 +128,12 @@ public class XmlServiceImpl implements XmlService {
             if (nodes.getLength() > 0) {
                 return nodes.item(0).getTextContent();
             }
-            throw new RuntimeException("P_2 not found in XML");
+            throw new XmlParsingException("P_2 element not found in the provided XML");
         } catch (Exception e) {
-            throw new RuntimeException("Failed to extract P_2: " + e.getMessage(), e);
+            if (e instanceof XmlParsingException) {
+                throw e;
+            }
+            throw new XmlParsingException("Failed to extract P_2 from XML", e);
         }
     }
 }

@@ -2,6 +2,7 @@ package com.invoice.invoice.Service.Impl;
 
 import com.invoice.invoice.Dto.InvoiceDto;
 import com.invoice.invoice.Entity.Invoice;
+import com.invoice.invoice.Exception.InvoiceProcessingException;
 import com.invoice.invoice.Repository.InvoiceRepository;
 import com.invoice.invoice.Service.InvoiceService;
 import com.invoice.invoice.Service.XmlService;
@@ -10,8 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.w3c.dom.Document;
+
 import java.io.InputStream;
 import java.util.Base64;
 
@@ -63,22 +64,21 @@ public class InvoiceServiceImpl implements InvoiceService {
 
         } catch (Exception e) {
             log.error("Failed to process invoice: {}", e.getMessage(), e);
-            throw new RuntimeException("Failed to process invoice: " + e.getMessage(), e);
+            throw new InvoiceProcessingException("Failed to process invoice: " + e.getMessage(), e);
         }
     }
 
     @Override
-    public InvoiceDto.InvoiceResponse processXmlInvoice(@RequestBody String xmlContent) {
+    public InvoiceDto.InvoiceResponse processXmlInvoice(String xmlContent) {
         log.info("Received XML invoice processing request");
         try {
             String base64Xml = Base64.getEncoder().encodeToString(xmlContent.getBytes());
             processInvoice(base64Xml);
 
-            InvoiceDto.InvoiceResponse response = new InvoiceDto.InvoiceResponse("Invoice saved successfully");
-            return response;
+            return new InvoiceDto.InvoiceResponse("Invoice saved successfully");
         } catch (Exception e) {
             log.error("Failed to process XML invoice: {}", e.getMessage());
-            throw e;
+            throw new InvoiceProcessingException("Failed to process XML invoice", e);
         }
     }
 }
