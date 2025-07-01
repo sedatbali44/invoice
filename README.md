@@ -61,7 +61,7 @@ Update `src/main/resources/application.properties` if your database configuratio
 ```properties
 spring.datasource.url=jdbc:postgresql://localhost:5432/postgres
 spring.datasource.username=postgres
-spring.datasource.password=your_password
+spring.datasource.password=
 ```
 
 ### 4. Add XSD Schema (Optional)
