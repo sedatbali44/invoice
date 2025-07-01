@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Base64;
+
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
@@ -19,21 +21,20 @@ public class InvoiceControllerImpl implements InvoiceController {
 
     private final InvoiceService invoiceService;
 
-    @PostMapping("/invoices")
-    public ResponseEntity<InvoiceDto.InvoiceResponse> processInvoice(
-            @Valid @RequestBody InvoiceDto.InvoiceRequest request) {
-
-        log.info("Received invoice processing request");
-
+    @Override
+    @PostMapping(value = "/invoices/xml", consumes = "application/xml", produces = "application/json")
+    public ResponseEntity<InvoiceDto.InvoiceResponse> processXmlInvoice(@RequestBody String xmlContent) {
+        log.info("Received XML invoice processing request");
         try {
-            invoiceService.processInvoice(request.getBase64Xml());
+            // Encode the XML to Base64 before processing
+            String base64Xml = Base64.getEncoder().encodeToString(xmlContent.getBytes());
+            invoiceService.processInvoice(base64Xml);
 
             InvoiceDto.InvoiceResponse response = new InvoiceDto.InvoiceResponse("Invoice saved successfully");
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
-
         } catch (Exception e) {
-            log.error("Failed to process invoice: {}", e.getMessage());
-            throw e; // Let the global exception handler deal with it
+            log.error("Failed to process XML invoice: {}", e.getMessage());
+            throw e;
         }
     }
 }
