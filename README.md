@@ -35,7 +35,7 @@ This Spring Boot application provides a REST API for processing XML invoices. Th
 ### 1. Clone the Repository
 
 ```bash
-https://github.com/sedatbali44/invoice.git
+git clone https://github.com/sedatbali44/invoice.git
 ```
 
 ### 2. Database Setup
@@ -89,7 +89,7 @@ The application will start on port 8080 by default.
 
 **Endpoint**: `POST /api/invoices`
 
-**Request Body**:
+**Request Body**: \*\*Requirement :XML data must be converted to base64 before including the payload.
 
 ```json
 {

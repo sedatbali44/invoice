@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 public interface InvoiceService {
 
-    void processInvoice(String base64Xml);
+    InvoiceDto.InvoiceResponse processInvoice(String base64Xml);
 
     InvoiceDto.InvoiceResponse processXmlInvoice(String xmlContent);
 }

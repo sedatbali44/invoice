@@ -26,8 +26,10 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Transactional
     @Override
-    public void processInvoice(String base64Xml) {
+    public InvoiceDto.InvoiceResponse processInvoice(String base64Xml) {
         try {
+            log.info("Starting invoice processing");
+
             String xmlContent = xmlService.decodeBase64(base64Xml);
             log.debug("Successfully decoded Base64 XML");
 
@@ -61,6 +63,8 @@ public class InvoiceServiceImpl implements InvoiceService {
 
             repo.save(invoice);
             log.info("Successfully saved invoice with NIP: {}", nip);
+
+            return new InvoiceDto.InvoiceResponse("Invoice saved successfully");
 
         } catch (Exception e) {
             log.error("Failed to process invoice: {}", e.getMessage(), e);

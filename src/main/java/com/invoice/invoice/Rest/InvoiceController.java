@@ -7,5 +7,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 public interface InvoiceController {
 
-    ResponseEntity<InvoiceDto.InvoiceResponse> processXmlInvoice(@RequestBody String xmlContent);
+    ResponseEntity<InvoiceDto.InvoiceResponse> processInvoice(@Valid @RequestBody InvoiceDto.InvoiceRequest request);
+
 }

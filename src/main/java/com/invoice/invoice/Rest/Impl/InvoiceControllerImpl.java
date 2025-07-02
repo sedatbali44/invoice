@@ -3,6 +3,7 @@ package com.invoice.invoice.Rest.Impl;
 import com.invoice.invoice.Dto.InvoiceDto;
 import com.invoice.invoice.Rest.InvoiceController;
 import com.invoice.invoice.Service.InvoiceService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +18,10 @@ public class InvoiceControllerImpl implements InvoiceController {
     private final InvoiceService invoiceService;
 
     @Override
-    @PostMapping(value = "/invoices", consumes = "application/xml", produces = "application/json")
-    public ResponseEntity<InvoiceDto.InvoiceResponse> processXmlInvoice(@RequestBody String xmlContent) {
-       return ResponseEntity.ok(invoiceService.processXmlInvoice(xmlContent));
+    @PostMapping(value = "/invoices", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<InvoiceDto.InvoiceResponse> processInvoice(@Valid @RequestBody InvoiceDto.InvoiceRequest request) {
+        log.info("Received invoice processing request");
+        InvoiceDto.InvoiceResponse response = invoiceService.processInvoice(request.getBase64Xml());
+        return ResponseEntity.ok(response);
     }
 }
