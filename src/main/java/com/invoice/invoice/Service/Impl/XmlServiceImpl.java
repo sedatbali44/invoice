@@ -27,6 +27,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Base64;
+import java.util.Iterator;
 
 @Service
 public class XmlServiceImpl implements XmlService {
@@ -82,7 +83,7 @@ public class XmlServiceImpl implements XmlService {
                 public String getPrefix(String uri) {
                     return null;
                 }
-                public java.util.Iterator<String> getPrefixes(String uri) {
+                public Iterator<String> getPrefixes(String uri) {
                     return null;
                 }
             });
